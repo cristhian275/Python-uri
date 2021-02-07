@@ -1,0 +1,77 @@
+def permutacao_elegante(Sequencia):
+
+    Impar = False
+    
+    Lista = Sequencia
+    Lista.sort()
+
+    if (len(Lista) % 2) != 0:
+
+        Impar = True
+        NumeroCentral = Lista.pop(len(Lista)//2)
+
+    Saida = []
+
+    while Lista != []:
+
+        Saida.insert(0, Lista.pop())
+        Saida.append(Lista.pop(0))
+
+        if Lista == []:
+
+            break
+        
+        Saida.insert(0, Lista.pop(0))
+        Saida.append(Lista.pop())
+
+    if Impar:
+
+        TamSaida = len(Saida)-1
+         
+        Inicio = abs(NumeroCentral - Saida[0])
+        Final = abs(NumeroCentral - Saida[TamSaida])
+
+        if Inicio > Final:
+
+            Saida.insert(0, NumeroCentral)
+
+        else:
+
+            Saida.append(NumeroCentral)
+               
+    Maior = 0    
+    Sub = 0
+       
+    for j in range(1,len(Saida)):
+
+        if Saida[j-1] - Saida[j] < 0:
+                
+            Sub += (Saida[j-1] - Saida[j]) * -1
+                
+        else:
+                
+            Sub += Saida[j-1] - Saida[j]
+                
+    if Sub > Maior:
+        
+        Maior = Sub
+            
+    Sub = 0
+
+    return Maior
+
+Casos = int(input())
+
+Cont = 1
+while Cont <= Casos:
+
+    Sequencia = [int(x) for x in input().split()]
+    N = Sequencia.pop(0)
+
+    Sequencia = Sequencia[:N]
+    
+    Saida = permutacao_elegante(Sequencia)
+
+    print('Case {}: {}'.format(Cont,Saida))
+
+    Cont += 1
